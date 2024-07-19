@@ -17,3 +17,7 @@ body{
 .custom-scrollbar::-webkit-scrollbar {
   display: none; 
 }
+/* Example of targeting the cross icon if it's part of the drag handle */
+.react-beautiful-dnd-drag-handle::after {
+  display: none; /* Hide the default cross icon */
+}
