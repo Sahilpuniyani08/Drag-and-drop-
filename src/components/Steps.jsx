@@ -11,11 +11,11 @@ import {
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import DragIndicatorIcon from "@mui/icons-material/DragIndicator";
 
-const Steps = ({ stepsCount }) => {
+const Steps = ({ workout }) => {
   
   return (
     <section>
-      {stepsCount?.map((item, index) => (
+      {workout?.map((item, index) => (
         <Card className="my-4 rounded-lg" key={index} >
           <CardContent>
             <div

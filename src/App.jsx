@@ -41,12 +41,12 @@ const exercise = [
   },
 ];
 
-const WorkOut = [{ id:"item-1", name: "warm up", sections: [{ height: "50%", km: 3 }] }];
 
+const WorkOut = [{ id:"item-1", name: "warm up", sections: [{ height: "50%", km: 3 }] }];
 
 function App() {
   const [stepsCount, setStepsCount] = useState([]);
-  //  const [workout, set
+  const [workout, setWorkout] = useState(WorkOut);
 
   const handleStepsCount =(step) =>{
     // console.log(step);
@@ -68,9 +68,9 @@ function App() {
             <LeftDragable exercise={exercise}  stepsCount={stepsCount} handleStepsCount={handleStepsCount}/>
           </div>
           <div className="w-[70%] h-[100vh] overflow-y-scroll pb-40 custom-scrollbar">
-            <RightDragable exercise={exercise}  stepsCount={stepsCount} handleStepsCount={handleStepsCount} />
+            <RightDragable workout={workout} />
             <div className="mt-4">
-              <Steps  stepsCount={stepsCount} />
+              <Steps  workout={workout} />
             </div>
           </div>
         </div>

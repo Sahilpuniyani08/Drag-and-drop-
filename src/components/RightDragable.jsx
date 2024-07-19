@@ -11,7 +11,7 @@ import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import Tooltip from "@mui/material/Tooltip";
 import { Draggable, Droppable } from "react-beautiful-dnd";
 
-const RightDragable = ({ steps, stepsCount, handleStepsCount }) => {
+const RightDragable = ({workout}) => {
   const arr = [1, 2, 3, 4, 5, 6];
 
   return (

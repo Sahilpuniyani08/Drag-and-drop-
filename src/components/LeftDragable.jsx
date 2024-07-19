@@ -11,7 +11,7 @@ import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import Tooltip from "@mui/material/Tooltip";
 import { Draggable, Droppable } from "react-beautiful-dnd";
 
-const LeftDragable = ({ steps , stepsCount ,handleStepsCount }) => {
+const LeftDragable = ({ exercise , stepsCount ,handleStepsCount }) => {
 
 
   return (
@@ -40,7 +40,7 @@ const LeftDragable = ({ steps , stepsCount ,handleStepsCount }) => {
               ref={provided.innerRef}
               {...provided.droppableProps}
             >
-              {steps.map((section, index) => (
+              {exercise.map((section, index) => (
                 <Draggable key={section.id} draggableId={section.id}  index={index}>
                   {(provided) => (
                    
