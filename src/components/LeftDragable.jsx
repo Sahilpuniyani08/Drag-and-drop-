@@ -43,7 +43,9 @@ const LeftDragable = ({ exercise , stepsCount ,handleStepsCount }) => {
               {exercise.map((section, index) => (
                 <Draggable key={section.id} draggableId={section.id}  index={index}>
                   {(provided) => (
-                   
+                  <Tooltip   key={index} title={section.name}>
+
+                
                       <Grid key={index} item xs={4} {...provided.draggableProps} {...provided.dragHandleProps} ref ={provided.innerRef}>
                         <div
                           style={{
@@ -67,7 +69,7 @@ const LeftDragable = ({ exercise , stepsCount ,handleStepsCount }) => {
                           ))}
                         </div>
                       </Grid>
-                   
+                      </Tooltip>
                   )}
                 </Draggable>
               ))}

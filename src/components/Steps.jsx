@@ -12,11 +12,10 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import DragIndicatorIcon from "@mui/icons-material/DragIndicator";
 
 const Steps = ({ workout }) => {
-  
   return (
     <section>
       {workout?.map((item, index) => (
-        <Card className="my-4 rounded-lg" key={index} >
+        <Card className="my-4 rounded-lg" key={index}>
           <CardContent>
             <div
               style={{
@@ -33,75 +32,79 @@ const Steps = ({ workout }) => {
             <Divider style={{ margin: "12px 0" }} />
             {item.sections.length > 0 &&
               item.sections.map((step, idx) => (
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                    backgroundColor: "#ededfd",
-                    padding: "5px",
-                    borderRadius: "10px",
-                    cursor: "pointer",
-                    marginBottom: "10px",
-                  }}
-                  key={index}
-                >
-                  <div>
-                    <div
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "5px",
-                      }}
-                    >
-                      <div className="text-sm">
-                        <DragIndicatorIcon />
+                <div className="flex flex-col gap-2 mt-10 ">
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      backgroundColor: "#ededfd",
+                      padding: "5px",
+                      borderRadius: "10px",
+                      cursor: "pointer",
+                      marginBottom: "10px",
+                    }}
+                    key={index}
+                  >
+                    <div>
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "5px",
+                        }}
+                      >
+                        <div className="text-sm">
+                          <DragIndicatorIcon />
+                        </div>
+                        <div className="h-10 w-10 rounded-sm bg-[#F2F2F2F2]"></div>
+                        <Typography variant="body2">Run</Typography>
                       </div>
-                      <div className="h-10 w-10 rounded-sm bg-[#F2F2F2F2]"></div>
-                      <Typography variant="body2">Run</Typography>
+                    </div>
+
+                    <div>
+                      <Button
+                        variant="outlined"
+                        style={{
+                          border: "1px solid #cccc",
+                          borderRadius: "10px",
+                          fontSize: "11px",
+                          fontweight: "600",
+                          backgroundColor: "#fff",
+                          color: "black",
+                        }}
+                      >
+                        {step.km} km
+                      </Button>
+                      <IconButton style={{ marginLeft: "8px" }}>
+                        <MoreVertIcon />
+                      </IconButton>
                     </div>
                   </div>
 
-                  <div>
+                  <Divider style={{ position: "relative", margin: "12px 0" }}>
                     <Button
                       variant="outlined"
                       style={{
-                        border: "1px solid #cccc",
-                        borderRadius: "10px",
+                        position: "absolute",
+                        top: "50%",
+                        left: "50%",
+                        transform: "translate(-50%, -50%)",
+                        border: "1px solid #5647ea",
+                        color: "black",
+                        borderRadius: "50px",
                         fontSize: "11px",
                         fontweight: "600",
                         backgroundColor: "#fff",
-                        color: "black",
                       }}
                     >
-                     {step.km} km
+                      Add Substep
                     </Button>
-                    <IconButton style={{ marginLeft: "8px" }}>
-                      <MoreVertIcon />
-                    </IconButton>
-                  </div>
+                  </Divider>
                 </div>
               ))}
           </CardContent>
-          <Divider style={{ position: "relative", margin: "12px 0" }}>
-            <Button
-              variant="outlined"
-              style={{
-                position: "absolute",
-                top: "50%",
-                left: "50%",
-                transform: "translate(-50%, -50%)",
-                border: "1px solid #5647ea",
-                color: "black",
-                borderRadius: "50px",
-                fontSize: "11px",
-                fontweight: "600",
-                backgroundColor: "#fff",
-              }}
-            >
-              Add Substep
-            </Button>
-          </Divider>
+
           <CardActions>{/* Actions for the card if needed */}</CardActions>
         </Card>
       ))}
