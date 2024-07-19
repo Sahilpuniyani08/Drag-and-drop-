@@ -6,7 +6,7 @@ import RightDragable from "./components/RightDragable";
 import Steps from "./components/Steps";
 import { DragDropContext } from "react-beautiful-dnd";
 
-const steps = [
+const exercise = [
   { id:"item-1", name: "warm up", sections: [{ height: "50%", km: 3 }] },
   { id:"item-2",name: "Active", sections: [{ height: "80%", km: 3 }] },
   { id:"item-3",name: "Cool Down", sections: [{ height: "40%", km: 3 }] },
@@ -41,11 +41,12 @@ const steps = [
   },
 ];
 
+const WorkOut = [{ id:"item-1", name: "warm up", sections: [{ height: "50%", km: 3 }] }];
 
 
 function App() {
   const [stepsCount, setStepsCount] = useState([]);
-  
+  //  const [workout, set
 
   const handleStepsCount =(step) =>{
     // console.log(step);
@@ -64,10 +65,10 @@ function App() {
       }}>
         <div className="flex gap-4">
           <div className="w-[30%]">
-            <LeftDragable steps={steps}  stepsCount={stepsCount} handleStepsCount={handleStepsCount}/>
+            <LeftDragable exercise={exercise}  stepsCount={stepsCount} handleStepsCount={handleStepsCount}/>
           </div>
           <div className="w-[70%] h-[100vh] overflow-y-scroll pb-40 custom-scrollbar">
-            <RightDragable steps={steps}  stepsCount={stepsCount} handleStepsCount={handleStepsCount} />
+            <RightDragable exercise={exercise}  stepsCount={stepsCount} handleStepsCount={handleStepsCount} />
             <div className="mt-4">
               <Steps  stepsCount={stepsCount} />
             </div>

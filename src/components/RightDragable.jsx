@@ -11,70 +11,60 @@ import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import Tooltip from "@mui/material/Tooltip";
 import { Draggable, Droppable } from "react-beautiful-dnd";
 
-const RightDragable = ({ steps , stepsCount ,handleStepsCount }) => {
+const RightDragable = ({ steps, stepsCount, handleStepsCount }) => {
+  const arr = [1, 2, 3, 4, 5, 6];
+
   return (
     <Card sx={{ borderRadius: "20px", height: "auto" }}>
-    <CardContent>
-      <Typography
-        variant="subtitle1"
-        component="div"
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-        }}
-      >
-        <span className="font-bold tracking-tighter text-sm">
-          Click or drag the blocks to build workouts
-        </span>
-        <IconButton aria-label="help">
-          <HelpOutlineIcon />
-        </IconButton>
-      </Typography>
-      <Divider sx={{ my: 1 }} />
-      <Droppable droppableId="newdroppable-1">
-        {(provided) => (
-          <div
-            ref={provided.innerRef}
-            {...provided.droppableProps}
-          >
-            {steps.map((section, index) => (
-              <Draggable key={section.id} draggableId={section.id}  index={index}>
-                {(provided) => (
-                 
-                    <div {...provided.draggableProps} {...provided.dragHandleProps} ref ={provided.innerRef}>
+      <CardContent>
+        <Typography
+          variant="subtitle1"
+          component="div"
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <span className="font-bold tracking-tighter text-sm">
+            Click or drag the blocks to build workouts
+          </span>
+          <IconButton aria-label="help">
+            <HelpOutlineIcon />
+          </IconButton>
+        </Typography>
+        <Divider sx={{ my: 1 }} />
+        <Droppable droppableId="newdroppable-2" direction="horizontal">
+          {(provided) => (
+            <div
+              ref={provided.innerRef}
+              {...provided.droppableProps}
+              className="w-full h-full flex gap-10"
+            >
+              {arr.map((a, id) => {
+                return (
+                  <Draggable key={id} draggableId={id} index={id}>
+                    {(provided) => (
                       <div
-                        style={{
-                          height: "60px",
-                          display: "flex",
-                          gap: "2px",
-                          alignItems: "flex-end",
-                          border: "1px solid #ccc",
-                          borderTopLeftRadius: "10px",
-                          borderTopRightRadius: "10px",
-                          overflow: "hidden",
-                          backgroundColor: "#F2F2F2",
-                        }}
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                        ref={provided.innerRef}
+                        index={id}
+                        className="h-full w-20 bg-red-300 m-6"
                       >
-                        {section.sections.map((item, idx) => (
-                          <div
-                            key={idx}
-                            className={`w-full bg-[#9b95f2]`}
-                            style={{ height: item.height }}
-                          />
-                        ))}
+                        sa
                       </div>
-                    </div>
-                 
-                )}
-              </Draggable>
-            ))}
-          </div>
-        )}
-      </Droppable>
-    </CardContent>
-  </Card>
-  )
-}
+                    )}
+                  </Draggable>
+                );
+              })}
+              {provided.placeholder}
+            </div>
+          )}
+        </Droppable>
+      </CardContent>
+    </Card>
+  );
+};
 
-export default RightDragable
+export default RightDragable;
