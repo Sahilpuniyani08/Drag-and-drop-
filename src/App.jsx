@@ -7,13 +7,14 @@ import Steps from "./components/Steps";
 import { DragDropContext } from "react-beautiful-dnd";
 
 const exercise = [
-  { id: "item-1", name: "warm up", sections: [{ height: "50%", km: 3 }] },
-  { id: "item-2", name: "Active", sections: [{ height: "80%", km: 3 }] },
-  { id: "item-3", name: "Cool Down", sections: [{ height: "40%", km: 3 }] },
+  { id: "item-1", name: "warm up", totalWidth: 3,sections: [{ height: "50%", km: 3 }] },
+  { id: "item-2", name: "Active",totalWidth: 3, sections: [{ height: "80%", km: 3 }] },
+  { id: "item-3", name: "Cool Down",totalWidth: 3, sections: [{ height: "40%", km: 3 }] },
 
   {
     id: "item-4",
     name: "Two Step Repeats",
+    totalWidth: 4,
     sections: [
       { height: "50%", km: 2 },
       { height: "40%", km: 2 },
@@ -22,6 +23,7 @@ const exercise = [
   {
     id: "item-5",
     name: "Ramp Up",
+    totalWidth: 5,
     sections: [
       { height: "50%", km: 2 },
       { height: "60%", km: 1 },
@@ -32,6 +34,7 @@ const exercise = [
   {
     id: "item-6",
     name: "Ramp Down",
+    totalWidth: 5,
     sections: [
       { height: "80%", km: 1 },
       { height: "70%", km: 1 },
@@ -42,7 +45,7 @@ const exercise = [
 ];
 
 const WorkOut = [
-  { id: "item-1", name: "warm up", sections: [{ height: "50%", km: 3 }] },
+  { id: "item-1", name: "warm up",  totalWidth: 3,sections: [{ height: "50%", km: 3 }] },
 ];
 
 function App() {
