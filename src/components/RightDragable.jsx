@@ -8,7 +8,6 @@ import {
   Divider,
 } from "@mui/material";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
-import Tooltip from "@mui/material/Tooltip";
 import { Draggable, Droppable } from "react-beautiful-dnd";
 
 const RightDragable = ({workout}) => {
