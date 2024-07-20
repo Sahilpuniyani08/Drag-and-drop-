@@ -22,6 +22,7 @@ const Steps = ({ workout, updateStepKm }) => {
 
   // Handler to start editing
   const handleEditClick = (exerciseIndex, currentKm, item_id, index) => {
+    console.log("edit");
     setSelectedExerciseIndex(exerciseIndex);
     setEditingIndex(index);
     setKmValue(currentKm);
@@ -31,10 +32,10 @@ const Steps = ({ workout, updateStepKm }) => {
   // Handler to save the edited value
   const handleSaveClick = (index) => {
     updateStepKm(editingIndex, selectedExerciseIndex, kmValue);
-    setEditingIndex(null);
+    console.log("Updated");
+    setEditingIndex(null); // Close the editing input
     setKmValue("");
-    setSelectedItemId(null);
-    setSelectedExerciseIndex("");
+    setSelectedExerciseIndex(null);
   };
 
   // Handle clicks outside the editing area
@@ -75,17 +76,16 @@ const Steps = ({ workout, updateStepKm }) => {
             <Divider style={{ margin: "12px 0" }} />
             {item.sections.length > 0 &&
               item.sections.map((step, idx) => (
-                <div
-                  className="flex flex-col gap-2 mt-10"
-                  key={idx}
-                  onClick={() => handleEditClick(idx, step.km, item.id, index)}
-                >
+                <div className="flex flex-col gap-2 mt-10" key={idx}>
                   <div
                     ref={
                       selectedExerciseIndex === idx && editingIndex === index
                         ? editingRef
                         : null
                     } // Attach ref only when editing
+                    onClick={() =>
+                      handleEditClick(idx, step.km, item.id, index)
+                    }
                     style={{
                       display: "flex",
                       alignItems: "center",
@@ -135,7 +135,10 @@ const Steps = ({ workout, updateStepKm }) => {
                             sx={{
                               backgroundColor: "#9a94f3",
                             }}
-                            onClick={() => handleSaveClick(idx)}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleSaveClick(idx);
+                            }}
                           >
                             Save
                           </Button>

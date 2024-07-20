@@ -53,7 +53,6 @@ const LeftDragable = ({ exercise , handleClick}) => {
                             display: "flex",
                             gap: "2px",
                             alignItems: "flex-end",
-                            border: "1px solid #ccc",
                             borderTopLeftRadius: "10px",
                             borderTopRightRadius: "10px",
                             overflow: "hidden",
