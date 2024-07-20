@@ -21,3 +21,7 @@ body{
 .react-beautiful-dnd-drag-handle::after {
   display: none; /* Hide the default cross icon */
 }
+
+.blend-with-background {
+  mix-blend-mode: lighten; /* Adjust blend mode as per your requirement */
+}
