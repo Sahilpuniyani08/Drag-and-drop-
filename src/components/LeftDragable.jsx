@@ -11,7 +11,7 @@ import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import Tooltip from "@mui/material/Tooltip";
 import { Draggable, Droppable } from "react-beautiful-dnd";
 
-const LeftDragable = ({ exercise ,}) => {
+const LeftDragable = ({ exercise , handleClick}) => {
 
 
   return (
@@ -46,7 +46,7 @@ const LeftDragable = ({ exercise ,}) => {
                   <Tooltip   key={index} title={section.name}>
 
                 
-                      <Grid key={index} item xs={4} {...provided.draggableProps} {...provided.dragHandleProps} ref ={provided.innerRef}>
+                      <Grid key={index} item xs={4}    {...provided.draggableProps} {...provided.dragHandleProps} ref ={provided.innerRef}>
                         <div
                           style={{
                             height: "60px",
@@ -59,6 +59,8 @@ const LeftDragable = ({ exercise ,}) => {
                             overflow: "hidden",
                             backgroundColor: "#F2F2F2",
                           }}
+
+                          onClick={()=>handleClick(section)}
                         >
                           {section.sections.map((item, idx) => (
                             <div

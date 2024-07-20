@@ -105,6 +105,10 @@ function App() {
     );
   };
 
+  const handleClick =(item) =>{
+    setWorkout((prevWorkout) => [...prevWorkout, item]);
+  }
+
   const onDragEnd = (event) => {
     console.log(event);
     const { destination, source } = event;
@@ -129,7 +133,7 @@ function App() {
       <DragDropContext onDragEnd={onDragEnd}>
         <div className="flex gap-4">
           <div className="w-[30%] ml-1">
-            <LeftDragable exercise={exercise} updateKmValue={updateKmValue} />
+            <LeftDragable exercise={exercise} updateKmValue={updateKmValue} handleClick={handleClick} />
           </div>
           <div className="w-[68%] h-[100vh] overflow-y-scroll pb-40 custom-scrollbar">
             <RightDragable
