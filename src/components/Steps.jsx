@@ -16,11 +16,13 @@ const Steps = ({ workout, updateStepKm }) => {
   const [editingIndex, setEditingIndex] = useState(null);
   const [kmValue, setKmValue] = useState("");
   const [selectedItemId, setSelectedItemId] = useState("");
+  const [selectedExerciseIndex, setSelectedExerciseIndex] = useState("");
 
   const editingRef = useRef(null); // Ref for the editing area
 
   // Handler to start editing
-  const handleEditClick = (index, currentKm, item_id) => {
+  const handleEditClick = (exerciseIndex, currentKm, item_id, index) => {
+    setSelectedExerciseIndex(exerciseIndex);
     setEditingIndex(index);
     setKmValue(currentKm);
     setSelectedItemId(item_id);
@@ -28,18 +30,21 @@ const Steps = ({ workout, updateStepKm }) => {
 
   // Handler to save the edited value
   const handleSaveClick = (index) => {
-    updateStepKm(selectedItemId,index, kmValue);
+    updateStepKm(editingIndex, selectedExerciseIndex, kmValue);
     setEditingIndex(null);
     setKmValue("");
-    setselectedItemId(null);
+    setSelectedItemId(null);
+    setSelectedExerciseIndex("");
   };
 
   // Handle clicks outside the editing area
   useEffect(() => {
     const handleClickOutside = (event) => {
+      console.log(event.target, editingRef.current);
       if (editingRef.current && !editingRef.current.contains(event.target)) {
         setEditingIndex(null); // Close the editing input
         setKmValue("");
+        setSelectedExerciseIndex(null);
       }
     };
 
@@ -70,14 +75,26 @@ const Steps = ({ workout, updateStepKm }) => {
             <Divider style={{ margin: "12px 0" }} />
             {item.sections.length > 0 &&
               item.sections.map((step, idx) => (
-                <div className="flex flex-col gap-2 mt-10" key={idx}>
+                <div
+                  className="flex flex-col gap-2 mt-10"
+                  key={idx}
+                  onClick={() => handleEditClick(idx, step.km, item.id, index)}
+                >
                   <div
-                    ref={editingIndex === idx ? editingRef : null} // Attach ref only when editing
+                    ref={
+                      selectedExerciseIndex === idx && editingIndex === index
+                        ? editingRef
+                        : null
+                    } // Attach ref only when editing
                     style={{
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "space-between",
-                      backgroundColor: "#ededfd",
+                      backgroundColor:
+                        selectedExerciseIndex === idx && editingIndex === index
+                          ? "#ededfd"
+                          : "#ffffff",
+                      border: "1px solid #ededfd",
                       padding: "5px",
                       borderRadius: "10px",
                       cursor: "pointer",
@@ -97,13 +114,14 @@ const Steps = ({ workout, updateStepKm }) => {
                         </div>
                         <div className="h-10 w-10 rounded-sm bg-[#F2F2F2F2]"></div>
                         <Typography variant="body2" sx={{ fontWeight: "600" }}>
-                          Run
+                          {step.exerciseLevel || item.name}{" "}
                         </Typography>
                       </div>
                     </div>
 
                     <div>
-                      {editingIndex === idx ? (
+                      {editingIndex === index &&
+                      selectedExerciseIndex == idx ? (
                         <div style={{ display: "flex", alignItems: "center" }}>
                           <TextField
                             value={kmValue}
@@ -136,7 +154,9 @@ const Steps = ({ workout, updateStepKm }) => {
                               lineHeight: "18px",
                               fontFamily: "DM Sans Serif",
                             }}
-                            onClick={() => handleEditClick(idx, step.km, item.id)}
+                            onClick={() =>
+                              handleEditClick(idx, step.km, item.id, index)
+                            }
                           >
                             {step.km} km
                           </Button>

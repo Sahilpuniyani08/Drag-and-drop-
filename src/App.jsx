@@ -7,9 +7,24 @@ import Steps from "./components/Steps";
 import { DragDropContext } from "react-beautiful-dnd";
 
 const exercise = [
-  { id: "warm-up", name: "Warm up", totalWidth: 3, sections: [{ height: "75%", km: 3 }] },
-  { id: "active", name: "Active", totalWidth: 3, sections: [{ height: "85%", km: 3 }] },
-  { id: "cool-down", name: "Cool Down", totalWidth: 3, sections: [{ height: "65%", km: 3 }] },
+  {
+    id: "warm-up",
+    name: "Warm up",
+    totalWidth: 3,
+    sections: [{ height: "75%", km: 3 }],
+  },
+  {
+    id: "active",
+    name: "Active",
+    totalWidth: 3,
+    sections: [{ height: "85%", km: 3 }],
+  },
+  {
+    id: "cool-down",
+    name: "Cool Down",
+    totalWidth: 3,
+    sections: [{ height: "65%", km: 3 }],
+  },
   {
     id: "two-step-repeat",
     name: "Two Step Repeats",
@@ -35,16 +50,21 @@ const exercise = [
     name: "Ramp Down",
     totalWidth: 5,
     sections: [
-      { height: "90%", km: 1 },
-      { height: "80%", km: 1 },
-      { height: "70%", km: 1 },
-      { height: "60%", km: 2 },
+      { height: "90%", km: 1,exerciseLevel: "Active" },
+      { height: "80%", km: 1,exerciseLevel: "Active" },
+      { height: "70%", km: 1 ,exerciseLevel: "Active"},
+      { height: "60%", km: 2 ,exerciseLevel: "Active"},
     ],
   },
 ];
 
 const WorkOut = [
-  { id: "item-1", name: "warm up", totalWidth: 3, sections: [{ height: "50%", km: 3 }] },
+  {
+    id: "item-1",
+    name: "warm up",
+    totalWidth: 3,
+    sections: [{ height: "50%", km: 3 }],
+  },
 ];
 
 function App() {
@@ -52,26 +72,33 @@ function App() {
 
   // Function to update km value based on item_id and index
   const updateKmValue = (itemId, index, newKm) => {
-    // Update the exercise array
-    const updatedExercise = exercise.map((item) => {
-      if (item.id === itemId) {
-        const updatedSections = item.sections.map((section, idx) =>
-          idx === index ? { ...section, km: newKm } : section
-        );
-        return { ...item, sections: updatedSections };
-      }
-      return item;
-    });
+    // // Update the exercise array
+    // const updatedExercise = exercise.map((item) => {
+    //   if (item.id === itemId) {
+    //     const updatedSections = item.sections.map((section, idx) =>
+    //       idx === index ? { ...section, km: newKm } : section
+    //     );
+    //     return { ...item, sections: updatedSections };
+    //   }
+    //   return item;
+    // });
 
     // Optionally update the workout state if needed
+    console.log(itemId, index, newKm);
     setWorkout((prevWorkout) =>
-      prevWorkout.map((item) =>
-        item.id === itemId
+      prevWorkout.map((item,idx) =>
+        idx === itemId
           ? {
               ...item,
               sections: item.sections.map((section, idx) =>
-                idx === index ? { ...section, km: newKm } : section
+                idx === index ? { ...section, km: Number(newKm) } : section
               ),
+              totalWidth: item.sections.reduce((sum, bar, idx) => {
+                return idx === index
+                  ? sum + Number(newKm)
+                  : sum + bar.km;
+              }, 0),
+    
             }
           : item
       )
@@ -105,7 +132,11 @@ function App() {
             <LeftDragable exercise={exercise} updateKmValue={updateKmValue} />
           </div>
           <div className="w-[68%] h-[100vh] overflow-y-scroll pb-40 custom-scrollbar">
-            <RightDragable workout={workout} setWorkout={setWorkout} updateKmValue={updateKmValue} />
+            <RightDragable
+              workout={workout}
+              setWorkout={setWorkout}
+              updateKmValue={updateKmValue}
+            />
             <div className="mt-4">
               <Steps workout={workout} updateStepKm={updateKmValue} />
             </div>

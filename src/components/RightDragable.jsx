@@ -4,7 +4,7 @@ import { Draggable, Droppable } from "react-beautiful-dnd";
 import Skeleton from "./Skeleton";
 import styled from "styled-components";
 import { FaTimes } from "react-icons/fa";
-
+import Button from "@mui/material/Button";
 // Define a styled component for the draggable item
 const StyledDraggableItem = styled.div`
   background-color: #fff; /* Change color as needed */
@@ -15,9 +15,12 @@ const StyledDraggableItem = styled.div`
   align-items: flex-end;
   gap: 2px;
   position: relative; /* Position for the cross icon */
-  cursor: ${(props) => (props.isDraggable ? 'grab' : 'default')}; /* No dragging cursor if not draggable */
+  cursor: ${(props) =>
+    props.isDraggable
+      ? "grab"
+      : "default"}; /* No dragging cursor if not draggable */
   transition: background-color 0.3s; /* Smooth transition for hover effect */
-  
+
   /* Hover effect to show the cross icon */
   &:hover .cross-icon {
     opacity: 1;
@@ -53,7 +56,7 @@ const XAxisContainer = styled.div`
 const XAxisLabel = styled.div`
   position: absolute;
   bottom: 0;
-  color: #CCCCCC; /* X-axis label color */
+  color: #cccccc; /* X-axis label color */
   font-weight: 500;
   font-size: 14px;
   line-height: 18px;
@@ -82,13 +85,15 @@ const YAxisLine = styled.div`
 
 // Define a styled component for the Y-Axis labels
 const YAxisLabel = styled.div`
-  color: #CCCCCC; /* Y-axis label color */
+  color: #cccccc; /* Y-axis label color */
   font-weight: 500;
   font-size: 14px;
   line-height: 18px;
 `;
 
 const RightDragable = ({ workout, setWorkout }) => {
+  console.log(workout);
+
   const containerRef = useRef(null);
 
   // Calculate total distance from workout data
@@ -102,12 +107,14 @@ const RightDragable = ({ workout, setWorkout }) => {
 
   // Function to convert percentage to number
   const parsePercentage = (percentage) => {
-    return parseFloat(percentage.replace('%', ''));
+    return parseFloat(percentage.replace("%", ""));
   };
 
   // Function to calculate max height of sections in a workout item
   const getMaxSectionHeightInPixels = (sections) => {
-    const maxHeightPercentage = Math.max(...sections.map(section => parsePercentage(section.height)));
+    const maxHeightPercentage = Math.max(
+      ...sections.map((section) => parsePercentage(section.height))
+    );
     return maxHeightPercentage;
   };
 
@@ -139,11 +146,10 @@ const RightDragable = ({ workout, setWorkout }) => {
       <CardContent sx={{ width: "100%", height: "100%", display: "flex" }}>
         {/* Y-Axis Container */}
         <YAxisContainer>
-          
           {yAxisLabels.map((label, index) => (
             <YAxisLabel
               key={index}
-              style={{ top: `${(100 - (label / 100) * 100)}%` }} // Position labels based on percentage
+              style={{ top: `${100 - (label / 100) * 100}%` }} // Position labels based on percentage
             >
               {label}
             </YAxisLabel>
@@ -151,7 +157,7 @@ const RightDragable = ({ workout, setWorkout }) => {
         </YAxisContainer>
 
         {/* Main Content */}
-        <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+        <div style={{ flex: 1, display: "flex", flexDirection: "column" }}>
           <div className="w-full h-full flex">
             <Droppable droppableId="newdroppable-2" direction="horizontal">
               {(provided) => (
@@ -168,8 +174,10 @@ const RightDragable = ({ workout, setWorkout }) => {
                   ) : (
                     workout.map((a, id) => {
                       // Find max height of the sections for current item
-                      const maxSectionHeight = getMaxSectionHeightInPixels(a.sections);
-                      
+                      const maxSectionHeight = getMaxSectionHeightInPixels(
+                        a.sections
+                      );
+                      console.log(a);
                       return (
                         <Draggable
                           key={id}
@@ -182,7 +190,9 @@ const RightDragable = ({ workout, setWorkout }) => {
                               ref={provided.innerRef}
                               {...provided.draggableProps}
                               {...provided.dragHandleProps}
-                              widthpercentage={(a.totalWidth / totalDistance) * 100}
+                              widthpercentage={
+                                (a.totalWidth / totalDistance) * 100
+                              }
                               isDraggable={false} // Indicate that this item is not draggable
                             >
                               {a.sections.map((item, idx) => (
@@ -223,6 +233,22 @@ const RightDragable = ({ workout, setWorkout }) => {
             ))}
           </XAxisContainer>
         </div>
+        <Button
+          sx={{
+            alignItems: "baseline",
+            fontSize: "8px",
+            backgroundColor: "#f8f8f8",
+            alignSelf: "baseline",
+            borderRadius: "20px",
+            color: "grey",
+            textTransform: "capitalize",
+          }}
+          onClick={() => {
+            setWorkout([]);
+          }}
+        >
+          Clear Block
+        </Button>
       </CardContent>
     </Card>
   );
