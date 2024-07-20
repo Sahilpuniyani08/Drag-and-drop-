@@ -65,7 +65,7 @@ const XAxisLabel = styled.div`
 // Define a styled component for the Y-Axis
 const YAxisContainer = styled.div`
   position: relative;
-  width: 40px; /* Width of the Y-axis container */
+  width: 50px; /* Width of the Y-axis container */
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -74,14 +74,7 @@ const YAxisContainer = styled.div`
   margin-bottom: 26px;
 `;
 
-// Define a styled component for the Y-Axis line
-const YAxisLine = styled.div`
-  position: absolute;
-  left: 0;
-  height: 100%;
-  width: 2px;
-  background-color: #000; /* Y-axis line color */
-`;
+
 
 // Define a styled component for the Y-Axis labels
 const YAxisLabel = styled.div`
@@ -130,6 +123,12 @@ const RightDragable = ({ workout, setWorkout }) => {
   const calculateXAxisLabels = () => {
     const interval = totalDistance > 10 ? 2 : 1; // Adjust interval based on distance
     const labels = [];
+    if(workout.length == 0){
+      for (let i = 0; i <= 10; i ++) {
+        labels.push(i);
+      } 
+      return labels
+    }
     for (let i = 0; i <= totalDistance; i += interval) {
       labels.push(i);
     }
@@ -137,13 +136,30 @@ const RightDragable = ({ workout, setWorkout }) => {
   };
 
   const xAxisLabels = calculateXAxisLabels();
-
   // Static Y-axis labels
   const yAxisLabels = [0, 25, 50, 75, 100].reverse();
 
   return (
     <Card sx={{ borderRadius: "20px", height: "50vh" }}>
-      <CardContent sx={{ width: "100%", height: "100%", display: "flex" }}>
+      <CardContent sx={{display: "flex", flexDirection:"column",width: "100%", height: "100%", }}>
+      <Button
+          sx={{
+            alignItems: "baseline",
+            fontSize: "8px",
+            backgroundColor: "#f8f8f8",
+            alignSelf: "end",
+            borderRadius: "20px",
+            color: "grey",
+            textTransform: "capitalize",
+            marginBottom:"10px"
+          }}
+          onClick={() => {
+            setWorkout([]);
+          }}
+        >
+          Clear Block
+        </Button>
+        <div style={{ width: "100%", height: "100%", display: "flex" }}>
         {/* Y-Axis Container */}
         <YAxisContainer>
           {yAxisLabels.map((label, index) => (
@@ -151,7 +167,7 @@ const RightDragable = ({ workout, setWorkout }) => {
               key={index}
               style={{ top: `${100 - (label / 100) * 100}%` }} // Position labels based on percentage
             >
-              {label}
+              {label}%
             </YAxisLabel>
           ))}
         </YAxisContainer>
@@ -226,29 +242,14 @@ const RightDragable = ({ workout, setWorkout }) => {
             {xAxisLabels.map((label, index) => (
               <XAxisLabel
                 key={index}
-                style={{ left: `${(label / totalDistance) * 100}%` }}
-              >
+                style={{ left: `${(label / (totalDistance==0 ? 10: totalDistance)) * 100}%` }}              >
                 {label}
               </XAxisLabel>
             ))}
           </XAxisContainer>
         </div>
-        <Button
-          sx={{
-            alignItems: "baseline",
-            fontSize: "8px",
-            backgroundColor: "#f8f8f8",
-            alignSelf: "baseline",
-            borderRadius: "20px",
-            color: "grey",
-            textTransform: "capitalize",
-          }}
-          onClick={() => {
-            setWorkout([]);
-          }}
-        >
-          Clear Block
-        </Button>
+        </div>
+      
       </CardContent>
     </Card>
   );
